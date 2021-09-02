@@ -6,6 +6,8 @@ const websiteNameEl = document.getElementById("website-name");
 const websiteUrlEl = document.getElementById("website-url");
 const bookmarksContainer = document.getElementById("modal-container");
 
+let bookmarks = [];
+
 // Show Modal , focus in Input
 let showModal = () => {
   modal.classList.add("show-modal");
@@ -28,12 +30,35 @@ let Validate = (nameValue, urlValue) => {
   if (!nameValue || !urlValue) {
     alert("please submit values for both fields.");
     return false;
-  } else {
+  }
+  if (!urlValue.match(regex)) {
     alert("please provide a valid web address");
     return false;
   }
   // Valid
   return true;
+};
+
+//  Fetch Bookmarks
+let fetchBookmarks = () => {
+  // Get Bookmarks from localStorage if available
+  if (localStorage.getItem("bookmarks")) {
+    bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+  } else {
+    // Create bookmarks array in localStorage
+    bookmarks = [
+      {
+        name: "My GitHub account",
+        url: "https://github.com/Ahmed-Roshdy-1",
+      },
+      {
+        name: "My Youtube Channel",
+        url: "https://www.youtube.com/channel/UCdjIzOGIRg-er6iN13VaFQg",
+      },
+    ];
+    localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  }
+  console.log(bookmarks);
 };
 // Handle Data from form
 let storeBookmark = (e) => {
@@ -43,11 +68,23 @@ let storeBookmark = (e) => {
   if (!urlValue.includes("http://", "https://")) {
     urlValue = `https://${urlValue}`;
   }
-  console.log(nameValue, urlValue);
+
   if (!Validate(nameValue, urlValue)) {
     return false;
   }
+  const bookmark = {
+    name: nameValue,
+    url: urlValue,
+  };
+  bookmarks.push(bookmark);
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  fetchBookmarks();
+  bookmarkForm.reset();
+  websiteNameEl.focus();
 };
 
 // Event Listener
 bookmarkForm.addEventListener("submit", storeBookmark);
+
+// on Load , Fetch Bookmarks
+fetchBookmarks();
