@@ -39,6 +39,22 @@ let Validate = (nameValue, urlValue) => {
   return true;
 };
 
+// Build Bookmarks DOM
+let buildBookmarks = () => {
+  // Build Items
+  bookmarks.forEach((bookmark) => {
+    const { name, url } = bookmark;
+    // Item
+    const item = document.createElement("div");
+    item.classList.add("item");
+    // close Icon
+    const closeIcon = document.createElement("i");
+    closeIcon.classList.add("fas", "fa-times");
+    closeIcon.setAttribute("title", "Delete Bookmark");
+    closeIcon.setAttribute("onclick", `deleteBookmark('${url}')`);
+  });
+};
+
 //  Fetch Bookmarks
 let fetchBookmarks = () => {
   // Get Bookmarks from localStorage if available
@@ -58,7 +74,7 @@ let fetchBookmarks = () => {
     ];
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }
-  console.log(bookmarks);
+  buildBookmarks();
 };
 // Handle Data from form
 let storeBookmark = (e) => {
