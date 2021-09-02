@@ -127,7 +127,7 @@ h3 {
 }
 .modal-content {
   padding: 20px;
-  background: whitesmoke;
+  background: rgb(0, 0, 0);
 }
 
 /* Form */
@@ -139,6 +139,7 @@ h3 {
   color: #f28482;
   display: block;
   font-weight: bold;
+  margin: 5px;
 }
 .form-input {
   width: 97%;
@@ -154,11 +155,12 @@ button {
   color: #fff;
   background: #f28482;
   height: 30px;
-  width: 100px;
+  width: 200px;
   font-weight: bold;
   border: none;
-  border-radius: 25px;
+  border-radius: 5px;
   margin-top: 10px;
+  margin-left: 28%;
 }
 
 button:hover {
