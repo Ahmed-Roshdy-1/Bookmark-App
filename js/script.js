@@ -41,6 +41,8 @@ let Validate = (nameValue, urlValue) => {
 
 // Build Bookmarks DOM
 let buildBookmarks = () => {
+  // Remove all bookmark elements
+  bookmarksContainer.textContent = "";
   // Build Items
   bookmarks.forEach((bookmark) => {
     const { name, url } = bookmark;
@@ -92,6 +94,18 @@ let fetchBookmarks = () => {
     localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
   }
   buildBookmarks();
+};
+
+// Delete Bookmark
+let deleteBookmark = (url) => {
+  bookmarks.forEach((bookmark, i) => {
+    if (bookmark.url === url) {
+      bookmarks.splice(i, 1);
+    }
+  });
+  //   Update bookmarks array in localStorage, re-populate DOM
+  localStorage.setItem("bookmarks", JSON.stringify(bookmarks));
+  fetchBookmarks();
 };
 // Handle Data from form
 let storeBookmark = (e) => {
